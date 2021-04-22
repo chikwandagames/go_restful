@@ -27,8 +27,11 @@ func main() {
 	sm.Handle("/", hh)
 	sm.Handle("/goodbye", gh)
 
-	// Manually create a server, we need to handle a situation, by which a
-	// server can get overloaded by too many requests
+	// We need to manually create a server, to handle a situation, by which the
+	// server can get overwhelmed by requests, by setting defaults for timeouts.
+	// Timeouts are important, for example, the server can only handle x request at a time,
+	// if for instance you have multiple request paused these are essentially blocked connections,
+	// this can cause the server to fail to satisfy requests, so we need to set timeouts
 	s := &http.Server{
 		Addr:         ":9090",
 		Handler:      sm,
